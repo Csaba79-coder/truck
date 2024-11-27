@@ -1,11 +1,11 @@
-package service;
+package first.service;
 
-import model.Item;
-import model.Truck;
+import first.model.Item;
+import first.model.Truck;
 
 import java.util.List;
 
-// 3. Pakolás optimalizálása (service.TruckLoadOptimizer)
+// 3. Pakolás optimalizálása (first.model.service.TruckLoadOptimizer)
 public class TruckLoadOptimizer {
 
     private List<Item> items;

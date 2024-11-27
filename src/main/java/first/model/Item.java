@@ -1,6 +1,6 @@
-package model;
+package first.model;
 
-// 1. Áru osztály (model.Item)
+// 1. Áru osztály (first.model.Item)
 public class Item {
 
     private int id;

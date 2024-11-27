@@ -1,6 +1,6 @@
-package model;
+package first.model;
 
-// 2. Teherautó osztály (model.Truck)
+// 2. Teherautó osztály (first.model.Truck)
 public class Truck {
 
     private int length;

@@ -1,12 +1,15 @@
-import model.Item;
-import model.Truck;
-import service.TruckLoadOptimizer;
+package first;
+
+import first.model.Item;
+import first.model.Truck;
+import first.service.TruckLoadOptimizer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
+    // ez nem optimalizál, csak véletlen elhelyez
     public static void main(String[] args) {
         // Árulista létrehozása
         List<Item> items = new ArrayList<>();
