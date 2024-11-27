@@ -1,10 +1,8 @@
 package second;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-// systematic
-public class TruckLoadOptimizer {
+public class TruckLoadOptimizerHeuristic {
 
     private static final int MAX_LAYERS = 3; // Maximális rétegszám
 
@@ -79,9 +77,35 @@ public class TruckLoadOptimizer {
             return true;
         }
 
-        // Ellenőrizzük, hogy a következő rétegbe elhelyezhető-e áru
-        public boolean canPlaceInNextLayer(int layer) {
-            return isLayerFull(layer);
+        // Ellenőrizzük, hogy egy réteg üres-e
+        public boolean isLayerEmpty(int layer) {
+            for (int x = 0; x < layers[0].length; x++) {
+                for (int y = 0; y < layers[0][0].length; y++) {
+                    if (layers[layer][x][y] > 0) {
+                        return false; // Ha van benne áru, akkor nem üres
+                    }
+                }
+            }
+            return true;
+        }
+
+        // Megnézzük, hogy egy réteg tele van-e, ha igen, akkor lépünk a következő rétegre
+        public boolean isLayerFullAndMoveToNextLayer(int layer) {
+            if (isLayerFull(layer)) {
+                System.out.println("A " + layer + ". réteg tele van.");
+                return true; // Visszaadjuk, hogy tele van és léphetünk a következő rétegre
+            }
+            return false;
+        }
+
+        // Megnézzük, hogy a rétegek megfelelően vannak-e kitöltve
+        public boolean isAnyLayerAvailable() {
+            for (int i = 0; i < layers.length; i++) {
+                if (!isLayerFull(i)) {
+                    return true; // Ha van üres hely egy rétegben, akkor van még hely
+                }
+            }
+            return false; // Ha mindegyik réteg tele van, akkor nincs több hely
         }
     }
 
@@ -93,14 +117,12 @@ public class TruckLoadOptimizer {
         for (Item item : items) {
             boolean placed = false;
 
-            // Az árut megpróbáljuk elhelyezni a rétegekben szisztematikusan
+            // Az árut megpróbáljuk elhelyezni az összes rétegben
             for (int layer = 0; layer < MAX_LAYERS && !placed; layer++) {
-                // Az aktuális réteg kitöltése
-                if (truck.isLayerFull(layer)) {
-                    continue; // Ha a réteg tele van, lépünk a következőre
+                if (truck.isLayerFullAndMoveToNextLayer(layer)) {
+                    continue; // Ha a réteg tele van, próbálkozunk a következő réteggel
                 }
 
-                // Az áru elhelyezése a rétegben
                 for (int x = 0; x < truck.layers[0].length && !placed; x++) {
                     for (int y = 0; y < truck.layers[0][0].length && !placed; y++) {
                         if (truck.placeItem(item, layer, x, y)) {
